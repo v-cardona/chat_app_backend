@@ -2,7 +2,6 @@ const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/usuario');
 const { generarJWT } = require('../helpers/jwt');
-const { validationResult } = require('express-validator');
 
 const crearUsuario = async(req, res = respons) => {
 
@@ -93,7 +92,40 @@ const login = async(req, res = respons) => {
     }
 }
 
+const renewToken = async(req, res = respons) => {
+
+    try {
+
+        const uid = req.uid;
+
+        const usuarioDb = await Usuario.findById(uid);
+        if (!usuarioDb) {
+
+            return res.status(404).json({
+                ok: false,
+                msg: 'Email no encontrado'
+            });
+        }
+
+        // generar el jwt
+        const token = await generarJWT(usuarioDb.id);
+
+        res.json({
+            ok: true,
+            usuario: usuarioDb,
+            token
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el admin'
+        });
+    }
+}
+
 module.exports = {
     crearUsuario,
-    login
+    login,
+    renewToken
 }
