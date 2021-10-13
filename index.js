@@ -21,20 +21,19 @@ require('./sockets/socket');
 
 
 // Path público
-const publicPath = path.resolve( __dirname, 'public' );
-app.use( express.static( publicPath ) );
+const publicPath = path.resolve(__dirname, 'public');
+app.use(express.static(publicPath));
 
 // rutas
-app.use('/api/login',require('./routes/auth'));
+app.use('/api/login', require('./routes/auth'));
+app.use('/api/usuarios', require('./routes/usuarios'));
 
 
 
-server.listen( process.env.PORT, ( err ) => {
+server.listen(process.env.PORT, (err) => {
 
-    if ( err ) throw new Error(err);
+    if (err) throw new Error(err);
 
-    console.log('Servidor corriendo en puerto', process.env.PORT );
+    console.log('Servidor corriendo en puerto', process.env.PORT);
 
 });
-
-
