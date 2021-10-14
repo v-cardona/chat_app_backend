@@ -14,7 +14,19 @@ const usuarioDesonectado = async(uid = '') => {
     return usuario;
 }
 
+const grabarMensaje = async(payload) => {
+    try {
+        const mensaje = new Mensaje(payload);
+        await mensaje.save();
+
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
 module.exports = {
     usuarioConectado,
-    usuarioDesonectado
+    usuarioDesonectado,
+    grabarMensaje
 }
