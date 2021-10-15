@@ -24,7 +24,6 @@ io.on('connection', (client) => {
 
     // escuchar del cliente el mensaje personal
     client.on('mensaje-personal', async(payload) => {
-        console.log(payload);
         // guardar mensaje en bda
         await grabarMensaje(payload);
 
